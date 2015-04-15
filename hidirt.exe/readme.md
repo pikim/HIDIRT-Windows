@@ -5,4 +5,5 @@ This project contains the program logic, the GUI container and the logging/traci
 
 Requirements
 ------------
-.NET 4.0 framework
+- .NET 4.0 framework
+- hidirt.common

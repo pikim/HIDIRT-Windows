@@ -5,4 +5,5 @@ This project contains all features and functionality that is common for the stan
 
 Requirements
 ------------
-.NET 4.0 framework
+- .NET 4.0 framework
+- GenericHid v0.1

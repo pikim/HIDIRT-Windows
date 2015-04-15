@@ -5,4 +5,6 @@ This project contains the program logic, the GUI container and the interface to 
 
 Requirements
 ------------
-.NET 4.0 framework
+- .NET 4.0 framework
+- hidirt.common
+- modified PowerScheduler plugin

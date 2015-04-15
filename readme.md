@@ -8,4 +8,5 @@ This project consists of a couple of sub-projects:
 
 Requirements
 ------------
-.NET 4.0 framework
+- .NET 4.0 framework
+- GenericHid v0.1
