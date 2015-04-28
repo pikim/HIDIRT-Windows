@@ -121,10 +121,10 @@
     <value>17, 17</value>
   </metadata>
   <data name="btnSetMinRepeats.ToolTip" xml:space="preserve">
-    <value>Configure how many IR code repetitions shall be skipped while
-holding a remote button before the next code is accepted.
-Helps to avoid situations where a button is pressed once, but
-two or more presses are recognized.</value>
+    <value>Configure how many IR code repetitions shall be skipped
+while holding a remote button before the next code is
+accepted. Helps to avoid situations where a button is
+pressed once, but two or more presses are recognized.</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>54</value>

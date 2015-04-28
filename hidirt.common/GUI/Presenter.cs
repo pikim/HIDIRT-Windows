@@ -73,9 +73,10 @@ namespace HIDIRT
          view.WriteResetCode += WriteResetCode;
          view.WriteMinRepeats += WriteMinRepeats;
          view.WriteForwardIrState += WriteForwardIrState;
-         view.SendIrCode += SendIrCode;
+         view.HandleCustomIrCode += HandleCustomIrCode;
 
          view.SaveAssignment += SaveAssignment;
+         view.SendSavedIrCode += SendSavedIrCode;
       }
 
       #endregion
@@ -118,7 +119,7 @@ namespace HIDIRT
             foreach (DataRow mapping in results)
             {
                String filename = mapping["Application"].ToString();
-               if ( filename != "")
+               if (filename != "")
                {
                   ProcessStartInfo psi = new ProcessStartInfo(filename, mapping["Parameter"].ToString());
                   if (Path.GetExtension(filename) == ".bat")
@@ -581,13 +582,40 @@ namespace HIDIRT
          ReadForwardIrState();
       }
 
-      public void SendIrCode()
+      public void HandleCustomIrCode()
       {
          Object protocol = controlInvoker.InvokeControlPropertyReader("numSendIrProtocol", "Value");
          Object address = controlInvoker.InvokeControlPropertyReader("numSendIrAddress", "Value");
          Object command = controlInvoker.InvokeControlPropertyReader("numSendIrCommand", "Value");
-         IrCode codeToSend = new IrCode(Convert.ToByte(protocol), Convert.ToUInt16(address), Convert.ToUInt16(command));
-         device.SendIrCode(codeToSend);
+
+         Boolean powerOff = (Boolean)controlInvoker.InvokeControlPropertyReader("chbSetPowerOffCode", "Checked");
+         Boolean powerOn = (Boolean)controlInvoker.InvokeControlPropertyReader("chbSetPowerOnCode", "Checked");
+         Boolean reset = (Boolean)controlInvoker.InvokeControlPropertyReader("chbSetResetCode", "Checked");
+
+         IrCode customCode = new IrCode(Convert.ToByte(protocol), Convert.ToUInt16(address), Convert.ToUInt16(command));
+
+         if (powerOff)
+         {
+           device.WriteIrCode(HIDIRT.hidInterface.ReportID.PowerOffCode, customCode);
+           ReadPowerOffCode();
+         }
+
+         if (powerOn)
+         {
+           device.WriteIrCode(HIDIRT.hidInterface.ReportID.PowerOnCode, customCode);
+           ReadPowerOnCode();
+         }
+
+         if (reset)
+         {
+           device.WriteIrCode(HIDIRT.hidInterface.ReportID.ResetCode, customCode);
+           ReadResetCode();
+         }
+
+         if (!powerOff && !powerOn && !reset)
+         {
+           device.SendIrCode(customCode);
+         }
       }
 
       #endregion
@@ -602,6 +630,11 @@ namespace HIDIRT
          }
          config.Tables.Add(view.assignment);
          SaveXmlConfig();
+      }
+
+      public void SendSavedIrCode(IrCode code)
+      {
+        device.SendIrCode(code);
       }
 
       #endregion

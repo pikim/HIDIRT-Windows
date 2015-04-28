@@ -43,7 +43,7 @@ namespace HIDIRT
       this.btnWritePowerOnCode = new System.Windows.Forms.Button();
       this.btnSetMinRepeats = new System.Windows.Forms.Button();
       this.btnForwardIrState = new System.Windows.Forms.Button();
-      this.btnSendIrCode = new System.Windows.Forms.Button();
+      this.btnCustomIrCode = new System.Windows.Forms.Button();
       this.btnAssignCode = new System.Windows.Forms.Button();
       this.btnSaveKeymap = new System.Windows.Forms.Button();
       this.groupBoxStatus = new System.Windows.Forms.GroupBox();
@@ -63,10 +63,12 @@ namespace HIDIRT
       this.lblFirmware = new System.Windows.Forms.Label();
       this.lblWakeupTime = new System.Windows.Forms.Label();
       this.groupBoxClockSchedule = new System.Windows.Forms.GroupBox();
+      this.label10 = new System.Windows.Forms.Label();
       this.groupBox15 = new System.Windows.Forms.GroupBox();
       this.btnControlPcButtons = new System.Windows.Forms.Button();
       this.lblControlPcButtons = new System.Windows.Forms.Label();
       this.btnUpdateFirmware = new System.Windows.Forms.Button();
+      this.label11 = new System.Windows.Forms.Label();
       this.groupBox10 = new System.Windows.Forms.GroupBox();
       this.chbEnableSyncClocks = new System.Windows.Forms.CheckBox();
       this.rdbKeepPcTime = new System.Windows.Forms.RadioButton();
@@ -76,10 +78,8 @@ namespace HIDIRT
       this.chbEnableAppStart = new System.Windows.Forms.CheckBox();
       this.groupBox11 = new System.Windows.Forms.GroupBox();
       this.dtpTime = new System.Windows.Forms.DateTimePicker();
-      this.label10 = new System.Windows.Forms.Label();
       this.groupBox12 = new System.Windows.Forms.GroupBox();
       this.numClockDeviation = new System.Windows.Forms.NumericUpDown();
-      this.label11 = new System.Windows.Forms.Label();
       this.label12 = new System.Windows.Forms.Label();
       this.groupBox13 = new System.Windows.Forms.GroupBox();
       this.dtpWakeupTime = new System.Windows.Forms.DateTimePicker();
@@ -114,6 +114,9 @@ namespace HIDIRT
       this.groupBox24 = new System.Windows.Forms.GroupBox();
       this.lblForwardIrState = new System.Windows.Forms.Label();
       this.groupBox25 = new System.Windows.Forms.GroupBox();
+      this.chbSetResetCode = new System.Windows.Forms.CheckBox();
+      this.chbSetPowerOnCode = new System.Windows.Forms.CheckBox();
+      this.chbSetPowerOffCode = new System.Windows.Forms.CheckBox();
       this.numSendIrProtocol = new System.Windows.Forms.NumericUpDown();
       this.numSendIrAddress = new System.Windows.Forms.NumericUpDown();
       this.numSendIrCommand = new System.Windows.Forms.NumericUpDown();
@@ -179,7 +182,7 @@ namespace HIDIRT
       this.btnWriteTime.Size = new System.Drawing.Size(87, 23);
       this.btnWriteTime.TabIndex = 2;
       this.btnWriteTime.Text = "Write";
-      this.toolTip.SetToolTip(this.btnWriteTime, "Write above time to device. Overwrites currently stored time.");
+      this.toolTip.SetToolTip(this.btnWriteTime, "Write current system time to device.\r\nOverwrites currently stored time.");
       this.btnWriteTime.UseVisualStyleBackColor = true;
       this.btnWriteTime.Click += new System.EventHandler(this.BtnWriteTimeClick);
       // 
@@ -190,8 +193,7 @@ namespace HIDIRT
       this.btnSetClockDeviation.Size = new System.Drawing.Size(64, 23);
       this.btnSetClockDeviation.TabIndex = 2;
       this.btnSetClockDeviation.Text = "Set";
-      this.toolTip.SetToolTip(this.btnSetClockDeviation, "Set compensation value if the device clock is running\r\ntoo fast or too slow (expe" +
-            "rimental feature).");
+      this.toolTip.SetToolTip(this.btnSetClockDeviation, "Set compensation value if the device\r\nclock is running too fast or too slow.");
       this.btnSetClockDeviation.UseVisualStyleBackColor = true;
       this.btnSetClockDeviation.Click += new System.EventHandler(this.BtnSetClockCorrectionClick);
       // 
@@ -213,7 +215,8 @@ namespace HIDIRT
       this.btnWriteWakeupTime.Size = new System.Drawing.Size(87, 23);
       this.btnWriteWakeupTime.TabIndex = 2;
       this.btnWriteWakeupTime.Text = "Write";
-      this.toolTip.SetToolTip(this.btnWriteWakeupTime, "Write above wakeup-time to device. Overwrites currently stored time.");
+      this.toolTip.SetToolTip(this.btnWriteWakeupTime, "Write above wakeup-time to device.\r\nOverwrites currently stored time. May\r\nbe ove" +
+            "rwritten by MediaPortal plugin.");
       this.btnWriteWakeupTime.UseVisualStyleBackColor = true;
       this.btnWriteWakeupTime.Click += new System.EventHandler(this.BtnWriteWakeupTimeClick);
       // 
@@ -247,8 +250,8 @@ namespace HIDIRT
       this.btnWriteResetCode.Size = new System.Drawing.Size(87, 23);
       this.btnWriteResetCode.TabIndex = 7;
       this.btnWriteResetCode.Text = "Write";
-      this.toolTip.SetToolTip(this.btnWriteResetCode, "Store the last received code as code that resets the host (when pressed 3 times w" +
-            "ithout interrupt).");
+      this.toolTip.SetToolTip(this.btnWriteResetCode, "Store the last received code as code that resets\r\nthe host (when pressed 3 times " +
+            "in a row).");
       this.btnWriteResetCode.UseVisualStyleBackColor = true;
       this.btnWriteResetCode.Click += new System.EventHandler(this.BtnWriteResetClick);
       // 
@@ -314,20 +317,21 @@ namespace HIDIRT
       this.btnForwardIrState.Size = new System.Drawing.Size(64, 23);
       this.btnForwardIrState.TabIndex = 1;
       this.btnForwardIrState.Text = "Enable";
-      this.toolTip.SetToolTip(this.btnForwardIrState, "Enable/Disable forwarding of received IR codes to other devices.");
+      this.toolTip.SetToolTip(this.btnForwardIrState, "Enable/Disable forwarding of received IR\r\ncodes to other devices.");
       this.btnForwardIrState.UseVisualStyleBackColor = true;
       this.btnForwardIrState.Click += new System.EventHandler(this.BtnForwardIrCodesClick);
       // 
-      // btnSendIrCode
+      // btnCustomIrCode
       // 
-      this.btnSendIrCode.Location = new System.Drawing.Point(122, 92);
-      this.btnSendIrCode.Name = "btnSendIrCode";
-      this.btnSendIrCode.Size = new System.Drawing.Size(64, 23);
-      this.btnSendIrCode.TabIndex = 9;
-      this.btnSendIrCode.Text = "Send";
-      this.toolTip.SetToolTip(this.btnSendIrCode, "Send IR code specified above. Can be used to teach a code to an infrared remote.");
-      this.btnSendIrCode.UseVisualStyleBackColor = true;
-      this.btnSendIrCode.Click += new System.EventHandler(this.BtnSendIrCodeClick);
+      this.btnCustomIrCode.Location = new System.Drawing.Point(122, 92);
+      this.btnCustomIrCode.Name = "btnCustomIrCode";
+      this.btnCustomIrCode.Size = new System.Drawing.Size(64, 23);
+      this.btnCustomIrCode.TabIndex = 9;
+      this.btnCustomIrCode.Text = "Send";
+      this.toolTip.SetToolTip(this.btnCustomIrCode, "Send/Set IR code specified above. Sending can\r\nbe used to teach a code to an infr" +
+            "ared remote.");
+      this.btnCustomIrCode.UseVisualStyleBackColor = true;
+      this.btnCustomIrCode.Click += new System.EventHandler(this.BtnCustomIrCodeClick);
       // 
       // btnAssignCode
       // 
@@ -523,8 +527,10 @@ namespace HIDIRT
       this.groupBoxClockSchedule.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
                   | System.Windows.Forms.AnchorStyles.Left) 
                   | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBoxClockSchedule.Controls.Add(this.label10);
       this.groupBoxClockSchedule.Controls.Add(this.groupBox15);
       this.groupBoxClockSchedule.Controls.Add(this.btnUpdateFirmware);
+      this.groupBoxClockSchedule.Controls.Add(this.label11);
       this.groupBoxClockSchedule.Controls.Add(this.groupBox10);
       this.groupBoxClockSchedule.Controls.Add(this.groupBox11);
       this.groupBoxClockSchedule.Controls.Add(this.groupBox12);
@@ -536,6 +542,16 @@ namespace HIDIRT
       this.groupBoxClockSchedule.TabIndex = 0;
       this.groupBoxClockSchedule.TabStop = false;
       this.groupBoxClockSchedule.Text = "Settings";
+      // 
+      // label10
+      // 
+      this.label10.AutoSize = true;
+      this.label10.Location = new System.Drawing.Point(6, 279);
+      this.label10.Name = "label10";
+      this.label10.Size = new System.Drawing.Size(259, 26);
+      this.label10.TabIndex = 7;
+      this.label10.Text = "When connecting a device it will take some seconds\r\nto recognize it. Switch tabs " +
+      "to update device settings.";
       // 
       // groupBox15
       // 
@@ -555,7 +571,8 @@ namespace HIDIRT
       this.btnControlPcButtons.Size = new System.Drawing.Size(64, 23);
       this.btnControlPcButtons.TabIndex = 1;
       this.btnControlPcButtons.Text = "Enable";
-      this.toolTip.SetToolTip(this.btnControlPcButtons, "Enable/Disable control of the PCs power and reset button.");
+      this.toolTip.SetToolTip(this.btnControlPcButtons, "Enable/Disable control of the PCs power\r\nand reset button. If disabled wakeup\r\nwi" +
+            "ll happen using USB while power down\r\nand reset won\'t be available.");
       this.btnControlPcButtons.UseVisualStyleBackColor = true;
       this.btnControlPcButtons.Click += new System.EventHandler(this.BtnControlPcButtonsClick);
       // 
@@ -582,6 +599,16 @@ namespace HIDIRT
       this.toolTip.SetToolTip(this.btnUpdateFirmware, "Update the device firmware.");
       this.btnUpdateFirmware.UseVisualStyleBackColor = true;
       this.btnUpdateFirmware.Click += new System.EventHandler(this.BtnUpdateFirmwareClick);
+      // 
+      // label11
+      // 
+      this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.label11.AutoSize = true;
+      this.label11.Location = new System.Drawing.Point(430, 16);
+      this.label11.Name = "label11";
+      this.label11.Size = new System.Drawing.Size(28, 13);
+      this.label11.TabIndex = 1;
+      this.label11.Text = "v0.2";
       // 
       // groupBox10
       // 
@@ -673,10 +700,9 @@ namespace HIDIRT
       this.groupBox11.Controls.Add(this.dtpTime);
       this.groupBox11.Controls.Add(this.btnReadTime);
       this.groupBox11.Controls.Add(this.btnWriteTime);
-      this.groupBox11.Controls.Add(this.label10);
       this.groupBox11.Location = new System.Drawing.Point(6, 188);
       this.groupBox11.Name = "groupBox11";
-      this.groupBox11.Size = new System.Drawing.Size(192, 103);
+      this.groupBox11.Size = new System.Drawing.Size(192, 74);
       this.groupBox11.TabIndex = 1;
       this.groupBox11.TabStop = false;
       this.groupBox11.Text = "Clock";
@@ -693,20 +719,10 @@ namespace HIDIRT
       this.dtpTime.TabIndex = 0;
       this.dtpTime.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
       // 
-      // label10
-      // 
-      this.label10.AutoSize = true;
-      this.label10.Location = new System.Drawing.Point(6, 71);
-      this.label10.Name = "label10";
-      this.label10.Size = new System.Drawing.Size(181, 26);
-      this.label10.TabIndex = 3;
-      this.label10.Text = "It will take some time until new time\r\ncan be read. Simply click read again.";
-      // 
       // groupBox12
       // 
       this.groupBox12.Controls.Add(this.numClockDeviation);
       this.groupBox12.Controls.Add(this.btnSetClockDeviation);
-      this.groupBox12.Controls.Add(this.label11);
       this.groupBox12.Controls.Add(this.label12);
       this.groupBox12.Location = new System.Drawing.Point(204, 19);
       this.groupBox12.Name = "groupBox12";
@@ -729,20 +745,10 @@ namespace HIDIRT
                   0,
                   -2147483648});
       this.numClockDeviation.Name = "numClockDeviation";
-      this.numClockDeviation.Size = new System.Drawing.Size(84, 20);
+      this.numClockDeviation.Size = new System.Drawing.Size(99, 20);
       this.numClockDeviation.TabIndex = 0;
       this.numClockDeviation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
       this.numClockDeviation.ThousandsSeparator = true;
-      // 
-      // label11
-      // 
-      this.label11.AutoSize = true;
-      this.label11.Location = new System.Drawing.Point(90, 21);
-      this.label11.Name = "label11";
-      this.label11.Size = new System.Drawing.Size(20, 13);
-      this.label11.TabIndex = 1;
-      this.label11.Text = "Hz";
-      this.label11.Visible = false;
       // 
       // label12
       // 
@@ -1108,10 +1114,13 @@ namespace HIDIRT
       // 
       // groupBox25
       // 
+      this.groupBox25.Controls.Add(this.chbSetResetCode);
+      this.groupBox25.Controls.Add(this.chbSetPowerOnCode);
+      this.groupBox25.Controls.Add(this.chbSetPowerOffCode);
       this.groupBox25.Controls.Add(this.numSendIrProtocol);
       this.groupBox25.Controls.Add(this.numSendIrAddress);
       this.groupBox25.Controls.Add(this.numSendIrCommand);
-      this.groupBox25.Controls.Add(this.btnSendIrCode);
+      this.groupBox25.Controls.Add(this.btnCustomIrCode);
       this.groupBox25.Controls.Add(this.label30);
       this.groupBox25.Controls.Add(this.label31);
       this.groupBox25.Controls.Add(this.label32);
@@ -1120,10 +1129,46 @@ namespace HIDIRT
       this.groupBox25.Controls.Add(this.label35);
       this.groupBox25.Location = new System.Drawing.Point(204, 123);
       this.groupBox25.Name = "groupBox25";
-      this.groupBox25.Size = new System.Drawing.Size(192, 121);
+      this.groupBox25.Size = new System.Drawing.Size(192, 165);
       this.groupBox25.TabIndex = 5;
       this.groupBox25.TabStop = false;
-      this.groupBox25.Text = "Send IR code";
+      this.groupBox25.Text = "Custom IR code";
+      // 
+      // chbSetResetCode
+      // 
+      this.chbSetResetCode.AutoSize = true;
+      this.chbSetResetCode.Location = new System.Drawing.Point(6, 96);
+      this.chbSetResetCode.Name = "chbSetResetCode";
+      this.chbSetResetCode.Size = new System.Drawing.Size(95, 17);
+      this.chbSetResetCode.TabIndex = 12;
+      this.chbSetResetCode.Text = "Set reset code";
+      this.toolTip.SetToolTip(this.chbSetResetCode, "Set custom code as reset code.");
+      this.chbSetResetCode.UseVisualStyleBackColor = true;
+      this.chbSetResetCode.CheckedChanged += new System.EventHandler(this.ChbSetIrCodeCheckedChanged);
+      // 
+      // chbSetPowerOnCode
+      // 
+      this.chbSetPowerOnCode.AutoSize = true;
+      this.chbSetPowerOnCode.Location = new System.Drawing.Point(6, 119);
+      this.chbSetPowerOnCode.Name = "chbSetPowerOnCode";
+      this.chbSetPowerOnCode.Size = new System.Drawing.Size(116, 17);
+      this.chbSetPowerOnCode.TabIndex = 10;
+      this.chbSetPowerOnCode.Text = "Set power on code";
+      this.toolTip.SetToolTip(this.chbSetPowerOnCode, "Set custom code as power on code.");
+      this.chbSetPowerOnCode.UseVisualStyleBackColor = true;
+      this.chbSetPowerOnCode.CheckedChanged += new System.EventHandler(this.ChbSetIrCodeCheckedChanged);
+      // 
+      // chbSetPowerOffCode
+      // 
+      this.chbSetPowerOffCode.AutoSize = true;
+      this.chbSetPowerOffCode.Location = new System.Drawing.Point(6, 142);
+      this.chbSetPowerOffCode.Name = "chbSetPowerOffCode";
+      this.chbSetPowerOffCode.Size = new System.Drawing.Size(116, 17);
+      this.chbSetPowerOffCode.TabIndex = 11;
+      this.chbSetPowerOffCode.Text = "Set power off code";
+      this.toolTip.SetToolTip(this.chbSetPowerOffCode, "Set custom code as power off code.");
+      this.chbSetPowerOffCode.UseVisualStyleBackColor = true;
+      this.chbSetPowerOffCode.CheckedChanged += new System.EventHandler(this.ChbSetIrCodeCheckedChanged);
       // 
       // numSendIrProtocol
       // 
@@ -1254,7 +1299,7 @@ namespace HIDIRT
       this.btnAssignApp.Size = new System.Drawing.Size(105, 23);
       this.btnAssignApp.TabIndex = 2;
       this.btnAssignApp.Text = "Assign application";
-      this.toolTip.SetToolTip(this.btnAssignApp, "Assign an application with optional arguments to selection.");
+      this.toolTip.SetToolTip(this.btnAssignApp, "Assign an application with optional\r\narguments to selection.");
       this.btnAssignApp.UseVisualStyleBackColor = true;
       this.btnAssignApp.Click += new System.EventHandler(this.BtnAssignAppClick);
       // 
@@ -1273,6 +1318,7 @@ namespace HIDIRT
       this.dgvKeymap.Name = "dgvKeymap";
       this.dgvKeymap.Size = new System.Drawing.Size(452, 257);
       this.dgvKeymap.TabIndex = 0;
+      this.dgvKeymap.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvKeymapCellClick);
       this.dgvKeymap.CellParsing += new System.Windows.Forms.DataGridViewCellParsingEventHandler(this.DgvKeymapCellParsing);
       this.dgvKeymap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvKeymapKeyDown);
       // 
@@ -1343,7 +1389,6 @@ namespace HIDIRT
       this.groupBox10.ResumeLayout(false);
       this.groupBox10.PerformLayout();
       this.groupBox11.ResumeLayout(false);
-      this.groupBox11.PerformLayout();
       this.groupBox12.ResumeLayout(false);
       this.groupBox12.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numClockDeviation)).EndInit();
@@ -1377,6 +1422,9 @@ namespace HIDIRT
       this.tabPageKeymap.ResumeLayout(false);
       this.ResumeLayout(false);
     }
+    private System.Windows.Forms.CheckBox chbSetPowerOffCode;
+    private System.Windows.Forms.CheckBox chbSetPowerOnCode;
+    private System.Windows.Forms.CheckBox chbSetResetCode;
     private System.Windows.Forms.ToolTip toolTip;
     private System.Windows.Forms.Label lblControlPcButtons;
     private System.Windows.Forms.Button btnControlPcButtons;
@@ -1399,7 +1447,7 @@ namespace HIDIRT
     private System.Windows.Forms.Button btnReadWakeupTime;
     private System.Windows.Forms.Button btnReadTime;
     private System.Windows.Forms.Button btnSaveKeymap;
-    private System.Windows.Forms.Button btnSendIrCode;
+    private System.Windows.Forms.Button btnCustomIrCode;
     private System.Windows.Forms.Button btnSetMinRepeats;
     private System.Windows.Forms.Button btnSetWakeupTimeSpan;
     private System.Windows.Forms.Button btnSetClockDeviation;

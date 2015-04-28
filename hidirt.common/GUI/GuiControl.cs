@@ -17,6 +17,7 @@
 
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using HIDIRT;
@@ -39,9 +40,6 @@ namespace HIDIRT
       controlInvoker = new ControlInvoker(this);
       // Following leads to graphical issues in #develop when set as default in designer
       dgvKeymap.RowHeadersWidth = 24;
-//      numSendIrProtocol = new NumericUpDown2DigitHex();
-//      numSendIrAddress = new NumericUpDown4DigitHex();
-//      numSendIrCommand = new NumericUpDown4DigitHex();
     }
     
     private void TabControlSelecting(object sender, TabControlCancelEventArgs e)
@@ -84,7 +82,7 @@ namespace HIDIRT
         btnForwardIrState.Enabled = false;
         btnReadTime.Enabled = false;
         btnReadWakeupTime.Enabled = false;
-        btnSendIrCode.Enabled = false;
+        btnCustomIrCode.Enabled = false;
         btnSetClockDeviation.Enabled = false;
         btnSetMinRepeats.Enabled = false;
         btnSetWakeupTimeSpan.Enabled = false;
@@ -102,6 +100,9 @@ namespace HIDIRT
         numSendIrCommand.Enabled = false;
         numSendIrProtocol.Enabled = false;
         numWakeupTimeSpan.Enabled = false;
+        chbSetPowerOffCode.Enabled = false;
+        chbSetPowerOnCode.Enabled = false;
+        chbSetResetCode.Enabled = false;
       }
     }
 
@@ -120,7 +121,7 @@ namespace HIDIRT
         btnForwardIrState.Enabled = true;
         btnReadTime.Enabled = true;
         btnReadWakeupTime.Enabled = true;
-        btnSendIrCode.Enabled = true;
+        btnCustomIrCode.Enabled = true;
         btnSetClockDeviation.Enabled = true;
         btnSetMinRepeats.Enabled = true;
         btnSetWakeupTimeSpan.Enabled = true;
@@ -138,6 +139,9 @@ namespace HIDIRT
         numSendIrCommand.Enabled = true;
         numSendIrProtocol.Enabled = true;
         numWakeupTimeSpan.Enabled = true;
+        chbSetPowerOffCode.Enabled = true;
+        chbSetPowerOnCode.Enabled = true;
+        chbSetResetCode.Enabled = true;
       }
     }
 
@@ -257,73 +261,96 @@ namespace HIDIRT
         this.WriteForwardIrState();
     }
 
-    void BtnSendIrCodeClick(object sender, EventArgs e)
+    void BtnCustomIrCodeClick(object sender, EventArgs e)
     {
-      if (this.SendIrCode != null)
-        this.SendIrCode();
+      if (this.HandleCustomIrCode != null)
+        this.HandleCustomIrCode();
+    }
+
+    void ChbSetIrCodeCheckedChanged(object sender, EventArgs e)
+    {
+      if (chbSetPowerOffCode.Checked || chbSetPowerOnCode.Checked || chbSetResetCode.Checked)
+      {
+        btnCustomIrCode.Text = "Set";
+      }
+      else
+      {
+        btnCustomIrCode.Text = "Send";
+      }
     }
 
     #endregion
 
     #region Keymapping
     
+    void DgvKeymapCellClick(object sender, DataGridViewCellEventArgs e)
+    {
+      if (e.ColumnIndex == 0)
+      {
+        IrCode code = new IrCode();
+        code.Protocol = Convert.ToByte(dgvKeymap.CurrentRow.Cells["IrProtocol"].Value);
+        code.Address = Convert.ToUInt16(dgvKeymap.CurrentRow.Cells["IrAddress"].Value);
+        code.Command = Convert.ToUInt16(dgvKeymap.CurrentRow.Cells["IrCommand"].Value);
+        
+        if (this.SendSavedIrCode != null)
+          this.SendSavedIrCode(code);
+      }
+      
+      if (e.ColumnIndex == 1)
+      {
+        String filename = dgvKeymap.CurrentRow.Cells["Application"].Value.ToString();
+        String parameter = dgvKeymap.CurrentRow.Cells["Parameter"].Value.ToString();
+        if (filename != "")
+        {
+          ProcessStartInfo psi = new ProcessStartInfo(filename, parameter);
+          Process.Start(psi);
+        }
+      }
+    }
+    
     void DgvKeymapCellParsing(object sender, DataGridViewCellParsingEventArgs e)
     {
-      if ((e != null) && (e.Value != null))
+      if ((e != null) && (e.Value != null) && !e.DesiredType.Equals(typeof(String)))
       {
+        String val = e.Value.ToString().ToLower();
+        if (val.StartsWith("x"))
+        {
+          val = val.Insert(0, "0");
+        }
+        
+        UInt16 hex;
+        try
+        {
+          if (val.StartsWith("0x"))
+          {
+            hex = Convert.ToUInt16(val, 16);
+          }
+          else
+          {
+            hex = Convert.ToUInt16(val);
+          }
+        }
+        catch
+        {
+          MessageBox.Show("Format error of input value. Please enter value again.",
+                          "Format error",
+                          MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+          hex = 0;
+        }
+        
         if (e.DesiredType.Equals(typeof(Byte)))
         {
-          Byte hex;
-          try
-          {
-            String val = e.Value.ToString().ToLower();
-            if (val.StartsWith("0x"))
-            {
-              hex = Convert.ToByte(val, 16);
-            }
-            else
-            {
-              hex = Convert.ToByte(val);
-            }
-          }
-          catch
-          {
-            MessageBox.Show("Format error of input value. Please insert value again.",
-                            "Format error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            hex = 0;
-          }
+          e.Value = (Byte)hex;
+        }
+        else
+        {
           e.Value = hex;
         }
         
-        if (e.DesiredType.Equals(typeof(UInt16)))
-        {
-          UInt16 hex;
-          try
-          {
-            String val = e.Value.ToString().ToLower();
-            if (val.StartsWith("0x"))
-            {
-              hex = Convert.ToUInt16(val, 16);
-            }
-            else
-            {
-              hex = Convert.ToUInt16(val);
-            }
-          }
-          catch
-          {
-            MessageBox.Show("Format error of input value. Please insert value again.",
-                            "Format error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            hex = 0;
-          }
-          e.Value = hex;
-        }
         e.ParsingApplied = true;
       }
     }
-        
+
     void DgvKeymapKeyDown(object sender, KeyEventArgs e)
     {
       if (e.KeyCode == Keys.Delete)
@@ -396,24 +423,6 @@ namespace HIDIRT
       get
       {
         return dataTable;
-//        DataTable dt = new DataTable("Keymap");
-//        foreach (DataGridViewColumn gridCol in dgvKeymap.Columns)
-//        {
-//          dt.Columns.Add(gridCol.Name);
-//        }
-//        foreach (DataGridViewRow gridRow in dgvKeymap.Rows)
-//        {
-//          if (gridRow.IsNewRow)
-//            continue;
-//          
-//          DataRow dtRow = dt.NewRow();
-//          for (Int32 col = 0; col < dgvKeymap.Columns.Count; col++)
-//          {
-//            dtRow[col] = (gridRow.Cells[col].Value == null ? DBNull.Value : gridRow.Cells[col].Value);
-//          }
-//          dt.Rows.Add(dtRow);
-//        }
-//        return dt;
       }
       set
       {
@@ -430,6 +439,24 @@ namespace HIDIRT
         dgvKeymap.AutoResizeColumn(dgvKeymap.Columns["IrCommand"].Index,
                                    DataGridViewAutoSizeColumnMode.AllCells);
         dgvKeymap.AutoResizeColumn(dgvKeymap.Columns["Key"].Index,
+                                   DataGridViewAutoSizeColumnMode.AllCells);
+
+        DataGridViewButtonColumn btnSend = new DataGridViewButtonColumn();
+        btnSend.HeaderText = "Send IR code";
+        btnSend.Text = "Send";
+        btnSend.Name = "SendAssignedCode";
+        btnSend.UseColumnTextForButtonValue = true;
+        dgvKeymap.Columns.Add(btnSend);
+        dgvKeymap.AutoResizeColumn(dgvKeymap.Columns["SendAssignedCode"].Index,
+                                   DataGridViewAutoSizeColumnMode.AllCells);
+
+        DataGridViewButtonColumn btnStart = new DataGridViewButtonColumn();
+        btnStart.HeaderText = "Start app";
+        btnStart.Text = "Start";
+        btnStart.Name = "StartAssignedApp";
+        btnStart.UseColumnTextForButtonValue = true;
+        dgvKeymap.Columns.Add(btnStart);
+        dgvKeymap.AutoResizeColumn(dgvKeymap.Columns["StartAssignedApp"].Index,
                                    DataGridViewAutoSizeColumnMode.AllCells);
 
 //        dgvKeymap.Columns["IrAddress"].Width = dgvKeymap.Columns["IrAddress"].
@@ -463,9 +490,10 @@ namespace HIDIRT
     public event Action WriteResetCode;
     public event Action WriteMinRepeats;
     public event Action WriteForwardIrState;
-    public event Action SendIrCode;
+    public event Action HandleCustomIrCode;
     
     public event Action SaveAssignment;
+    public event Action<IrCode> SendSavedIrCode;
     
     #endregion
 

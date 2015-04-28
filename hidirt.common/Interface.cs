@@ -344,7 +344,7 @@ namespace HIDIRT
         {
           secs = BitConverter.ToInt32(report.Data, 0);
           msecs = BitConverter.ToInt16(report.Data, 4);
-          dt = new DateTime(secs*10000000 + msecs*10000, DateTimeKind.Utc);
+          dt = new DateTime(secs*10000000 + msecs*1000, DateTimeKind.Utc);
           dt = dt.Value.AddTicks(defTime.Ticks);
           dt = dt.Value.ToLocalTime();
           Trace.WriteLine(String.Format("Get DeviceTime: {0}", dt));
@@ -363,7 +363,7 @@ namespace HIDIRT
         if(dt > defTime)
         {
           dt = dt.Subtract(defSpan);
-          ticks = (dt.Ticks / 10000) % 1000;
+          ticks = (dt.Ticks / 1000) % 1000;
           msecs = (Int16)ticks;
           ticks = dt.Ticks / 10000000;
           secs = (Int32)ticks;

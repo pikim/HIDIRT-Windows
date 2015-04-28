@@ -48,9 +48,10 @@ namespace HIDIRT
     event Action WriteResetCode;
     event Action WriteMinRepeats;
     event Action WriteForwardIrState;
-    event Action SendIrCode;
+    event Action HandleCustomIrCode;
     
     event Action SaveAssignment;
+    event Action<IrCode> SendSavedIrCode;
     
     #endregion
   }
