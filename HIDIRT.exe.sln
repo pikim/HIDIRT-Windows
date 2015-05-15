@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.4
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hidirt.common", "hidirt.common\hidirt.common.csproj", "{390FBC50-C9B0-4757-90C0-84EBC2B7C52B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hidirt.exe", "hidirt.exe\hidirt.exe.csproj", "{D9A4CACB-A6FA-4E2C-81DB-428FF3EFFF62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericHid", "GenericHid\GenericHid.csproj", "{A6E0F52F-4599-4758-B956-9E8420FD28A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{390FBC50-C9B0-4757-90C0-84EBC2B7C52B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{390FBC50-C9B0-4757-90C0-84EBC2B7C52B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{390FBC50-C9B0-4757-90C0-84EBC2B7C52B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{390FBC50-C9B0-4757-90C0-84EBC2B7C52B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9A4CACB-A6FA-4E2C-81DB-428FF3EFFF62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A4CACB-A6FA-4E2C-81DB-428FF3EFFF62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E0F52F-4599-4758-B956-9E8420FD28A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E0F52F-4599-4758-B956-9E8420FD28A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E0F52F-4599-4758-B956-9E8420FD28A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6E0F52F-4599-4758-B956-9E8420FD28A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.4
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerScheduler", "PowerScheduler\PowerScheduler.csproj", "{3F8F1617-A987-4516-BF37-E01D04D2686F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerScheduler.Interfaces", "PowerScheduler.Interfaces\PowerScheduler.Interfaces.csproj", "{7701AA79-18D4-4A18-BB52-16774FB7943D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hidirt.common", "hidirt.common\hidirt.common.csproj", "{390FBC50-C9B0-4757-90C0-84EBC2B7C52B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hidirt.MePo", "hidirt.MePo\hidirt.MePo.csproj", "{F768B6EA-80DB-43DE-B770-34C64911C9F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericHid", "GenericHid\GenericHid.csproj", "{A6E0F52F-4599-4758-B956-9E8420FD28A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F8F1617-A987-4516-BF37-E01D04D2686F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F8F1617-A987-4516-BF37-E01D04D2686F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F8F1617-A987-4516-BF37-E01D04D2686F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F8F1617-A987-4516-BF37-E01D04D2686F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7701AA79-18D4-4A18-BB52-16774FB7943D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7701AA79-18D4-4A18-BB52-16774FB7943D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7701AA79-18D4-4A18-BB52-16774FB7943D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7701AA79-18D4-4A18-BB52-16774FB7943D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{390FBC50-C9B0-4757-90C0-84EBC2B7C52B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{390FBC50-C9B0-4757-90C0-84EBC2B7C52B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{390FBC50-C9B0-4757-90C0-84EBC2B7C52B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{390FBC50-C9B0-4757-90C0-84EBC2B7C52B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F768B6EA-80DB-43DE-B770-34C64911C9F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F768B6EA-80DB-43DE-B770-34C64911C9F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F768B6EA-80DB-43DE-B770-34C64911C9F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F768B6EA-80DB-43DE-B770-34C64911C9F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E0F52F-4599-4758-B956-9E8420FD28A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E0F52F-4599-4758-B956-9E8420FD28A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E0F52F-4599-4758-B956-9E8420FD28A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6E0F52F-4599-4758-B956-9E8420FD28A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal
