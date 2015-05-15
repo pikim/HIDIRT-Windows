@@ -111,7 +111,7 @@ namespace HIDIRT.MePo
          Boolean success = false;
          Thread.Sleep(200);
 
-         DateTime nextWakeupTime = TvEngine.PowerScheduler.PowerScheduler.Instance.GetWakeupTimer();
+         DateTime nextWakeupTime = TvEngine.PowerScheduler.PowerScheduler.Instance.GetTimeToWakeup();
          Log.Info("HIDIRT: Next PS WakeupTime {0}.", nextWakeupTime.ToString());
 
          DateTime? readTime = HIDIRT.hidInterface.Instance.ReadWakeupTime();
